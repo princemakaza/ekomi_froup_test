@@ -1,0 +1,43 @@
+version: '3.8'
+
+services:
+  # API backend service
+  api:
+    build: .
+    container_name: ekomi_api
+    ports:
+      - "8080:8080"
+    environment:
+      - DB_HOST=db
+      - DB_USER=root
+      - DB_PASSWORD=Clinpride@2001
+      - DB_NAME=my_database
+      - DB_PORT=3306
+      - PORT=8080
+      - JWT_SECRET=ekomi_group_test
+    depends_on:
+      - db
+    networks:
+      - ecomi_network
+
+  # MySQL database service
+  db:
+    image: mysql:5.7
+    container_name: ekomi_db
+    environment:
+      MYSQL_ROOT_PASSWORD: Clinpride@2001
+      MYSQL_DATABASE: my_database
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - ecomi_network
+
+# Define network and volumes
+networks:
+  ecomi_network:
+    driver: bridge
+
+volumes:
+  mysql_data:
