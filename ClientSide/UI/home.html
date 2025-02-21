@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to Ekomi</title>
+    <link rel="stylesheet" href="home.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Outlook Emails</h1>
+        
+        <div class="email-item">
+            <div class="email-sender">john.doe@example.com</div>
+            <div class="email-message">Congratulations on getting a role at Ekomi! We're excited to have you join the team and look forward to working with you.</div>
+            <a href="#" class="view-more" data-email="john.doe@example.com">View more about the sender</a>
+        </div>
+
+
+        <div class="email-item">
+            <div class="email-sender">zpmakaza2@gmail.com</div>
+            <div class="email-message">Welcome to Ekomi! Your role is crucial, and we're thrilled to have you onboard.</div>
+            <a href="#" class="view-more" data-email="zpmakaza2@gmail.com">View more about the sender</a>
+        </div>
+
+        <div class="email-item">
+            <div class="email-sender">alice.jones@example.com</div>
+            <div class="email-message">Excited to see you joining the Ekomi family. We believe you'll do amazing things here!</div>
+            <a href="#" class="view-more" data-email="zpmakaza2@gmail.com">View more about the sender</a>
+        </div>
+
+        <div class="email-item">
+            <div class="email-sender">bob.brown@example.com</div>
+            <div class="email-message">Welcome to Ekomi! We're happy to have you as part of our team. Looking forward to seeing your contributions!</div>
+            <a href="#" class="view-more" data-email="john.doe@example.com">View more about the sender</a>
+        </div>
+
+        <div class="email-item">
+            <div class="email-sender">charlie.davis@example.com</div>
+            <div class="email-message">We're delighted to have you on board at Ekomi! Let's make great things happen together.</div>
+            <a href="#" class="view-more" data-email="john.doe@example.com">View more about the sender</a>
+        </div>
+
+        <div class="email-item">
+            <div class="email-sender">diana.wilson@example.com</div>
+            <div class="email-message">Congratulations! You're joining an awesome team at Ekomi. Looking forward to collaborating with you.</div>
+            <a href="#" class="view-more" data-email="john.doe@example.com">View more about the sender</a>
+        </div>
+
+        <div class="email-item">
+            <div class="email-sender">eve.martin@example.com</div>
+            <div class="email-message">Welcome to Ekomi! We are all looking forward to working with you and achieving great things together.</div>
+            <a href="#" class="view-more" data-email="john.doe@example.com">View more about the sender</a>
+        </div>
+
+        <div class="email-item">
+            <div class="email-sender">frank.white@example.com</div>
+            <div class="email-message">Welcome aboard! We’re thrilled you’re joining Ekomi. Let’s build something amazing.</div>
+            <a href="#" class="view-more" data-email="john.doe@example.com">View more about the sender</a>
+        </div>
+
+        <div class="email-item">
+            <div class="email-sender">grace.moore@example.com</div>
+            <div class="email-message">Ekomi is lucky to have you! We are excited for your future here.</div>
+            <a href="#" class="view-more" data-email="john.doe@example.com">View more about the sender</a>
+        </div>
+
+        <div class="email-item">
+            <div class="email-sender">henry.clark@example.com</div>
+            <div class="email-message">Welcome to the team at Ekomi! Together, we can accomplish great things.</div>
+            <a href="#" class="view-more" data-email="john.doe@example.com">View more about the sender</a>
+        </div>
+
+
+        <!-- Other email items -->
+
+    </div>
+
+    <!-- Modal/Popup for displaying user details -->
+    <div id="user-detail-modal" style="display: none;">
+        <div class="modal-content">
+            <h2>User Details</h2>
+            <p><strong>Full Name:</strong> <span id="full-name"></span></p>
+            <p><strong>Department:</strong> <span id="department"></span></p>
+            <p><strong>Phone Number:</strong> <span id="phone-number"></span></p>
+            <p><strong>Job Title:</strong> <span id="job-title"></span></p>
+            <p><strong>Email:</strong> <span id="email"></span></p>
+            <button onclick="closeModal()">Close</button>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Event listener for all "View more about the sender" links
+            const viewMoreLinks = document.querySelectorAll('.view-more');
+            
+            viewMoreLinks.forEach(link => {
+                link.addEventListener('click', function(event) {
+                    event.preventDefault(); // Prevent default link behavior
+                    const senderEmail = this.getAttribute('data-email');
+                    fetchUserData(senderEmail);
+                });
+            });
+        });
+
+        // Function to fetch user data from the API
+        async function fetchUserData(senderEmail) {
+            const token = localStorage.getItem('authToken');
+            if (!token) {
+                alert('No authentication token found!');
+                return;
+            }
+
+            const headers = {
+                'Authorization': `Bearer ${token}`,
+            };
+
+            try {
+                const response = await fetch(`http://localhost:8080/api/contact-details/user/email/${senderEmail}`, { headers });
+                if (response.ok) {
+                    const data = await response.json();
+                    console.log(data)
+                    showUserDetails(data);
+                } else {
+                    alert('Failed to fetch user data');
+                }
+            } catch (error) {
+                console.error('Error fetching data:', error);
+                alert('Error fetching user data');
+            }
+        }
+
+        // Function to display user details in the modal
+        function showUserDetails(data) {
+            document.getElementById('full-name').textContent = data.full_name;
+            document.getElementById('department').textContent = data.department;
+            document.getElementById('phone-number').textContent = data.phone_number;
+            document.getElementById('job-title').textContent = data.job_title;
+            document.getElementById('email').textContent = data.email;
+
+            // Show the modal
+            document.getElementById('user-detail-modal').style.display = 'block';
+        }
+
+        // Function to close the modal
+        function closeModal() {
+            document.getElementById('user-detail-modal').style.display = 'none';
+        }
+    </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

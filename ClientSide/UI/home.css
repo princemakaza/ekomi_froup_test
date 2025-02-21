@@ -1,0 +1,82 @@
+/* Resetting default styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body styling */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between; /* To position the email container and modal side by side */
+}
+
+/* Main container with email items */
+.container {
+    width: 75%; /* 3/4th of the screen for emails */
+    margin: auto;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Modal styling */
+#user-detail-modal {
+    display: none; /* Initially hidden */
+    width: 20%; /* Takes up 1/5th of the space */
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    position: fixed; /* Fixed position */
+    top: 20%;
+    right: 5%; /* Place on the right side */
+    z-index: 9999;
+}
+
+.modal-content {
+    padding: 20px;
+}
+
+h1, h2 {
+    text-align: center;
+    color: #333;
+}
+
+.email-item {
+    background-color: #f9f9f9;
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.email-item:hover {
+    background-color: #e9e9e9;
+}
+
+.email-sender {
+    font-weight: bold;
+    font-size: 16px;
+    color: #333;
+}
+
+.email-message {
+    font-size: 14px;
+    color: #666;
+    margin: 10px 0;
+}
+
+.view-more {
+    color: #007BFF;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.view-more:hover {
+    text-decoration: underline;
+}

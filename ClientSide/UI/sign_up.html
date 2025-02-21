@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up - Outlook</title>
+    <link rel="stylesheet" href="signup.css">
+</head>
+<body>
+
+    <div class="signup-container">
+        <div class="signup-box">
+            <h1>Create Account</h1>
+            <form id="signup-form" action="#" method="POST">
+                <div class="input-container">
+                    <label for="full_name">Full Name</label>
+                    <input type="text" id="full_name" name="full_name" required placeholder="Enter your full name" value="Prince Z Makaza">
+                </div>
+
+                <div class="input-container">
+                    <label for="department">Department</label>
+                    <input type="text" id="department" name="department" required placeholder="Enter your department" value="Technology">
+                </div>
+
+                <div class="input-container">
+                    <label for="phone_number">Phone Number</label>
+                    <input type="tel" id="phone_number" name="phone_number" required placeholder="Enter your phone number" value="+263712345678">
+                </div>
+
+                <div class="input-container">
+                    <label for="job_title">Job Title</label>
+                    <input type="text" id="job_title" name="job_title" required placeholder="Enter your job title" value="Software Developer">
+                </div>
+
+                <div class="input-container">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" required placeholder="Enter your email" value="zpmakaza2@gmail.com">
+                </div>
+
+                <div class="input-container">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" required placeholder="Enter your password" value="securePassword123">
+                </div>
+
+                <div class="input-container">
+                    <label for="confirm_password">Confirm Password</label>
+                    <input type="password" id="confirm_password" name="confirm_password" required placeholder="Confirm your password">
+                </div>
+
+                <button type="submit" class="sign-up-btn">Sign Up</button>
+
+                <div class="existing-account">
+                    <p>Already have an account?</p>
+                    <a href="login.html">Sign In</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('signup-form').addEventListener('submit', function (event) {
+            event.preventDefault();
+
+            // Gather form data
+            const formData = {
+                full_name: document.getElementById('full_name').value,
+                department: document.getElementById('department').value,
+                phone_number: document.getElementById('phone_number').value,
+                job_title: document.getElementById('job_title').value,
+                email: document.getElementById('email').value,
+                password: document.getElementById('password').value
+            };
+
+            // Send data to the API using Fetch
+            fetch('http://localhost:8080/api/contact-details/signup', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(formData)
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // Display success message and redirect to login page
+              
+                    window.location.replace('login.html');
+                } else {
+                    alert('Error: ' + data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('There was an error with the registration. Please try again later.');
+            });
+        });
+    </script>
+
+</body> 
+</html>
